@@ -40,6 +40,7 @@ INSTALLED_APPS = [
         'accounts',
         'applications',
         'jobs',
+        'profiles',
         ]
 
 MIDDLEWARE = [
@@ -129,5 +130,5 @@ MAILERS = {
             },
         }
 
-# Sets the user type to our custom user.
-AUTH_USER_MODEL = 'accounts.User'
+# define user model for authentication
+AUTH_USER_MODEL="accounts.User"
