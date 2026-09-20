@@ -132,4 +132,4 @@ MAILERS = {
 
 # define user model for authentication
 AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'

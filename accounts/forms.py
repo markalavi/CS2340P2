@@ -23,5 +23,5 @@ class SignupForm(UserCreationForm):
 
 	email = forms.EmailField(required=True)
 	role = forms.ChoiceField(
-		choices=[(User.Role.JOB_SEEKER, 'Job Seeker'), (User.Role.RECRUITER, 'Recruiter')]
+		choices=[(User.UserType.JobSeeker, 'Job Seeker'), (User.UserType.Recruiter, 'Recruiter')]
 	)

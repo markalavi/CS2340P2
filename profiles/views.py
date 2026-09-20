@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 @login_required
 def profile_me(request):
-	data = {'template_data': {'title': 'My Profile'}}
+	profile = request.user.profile
+
+	data = {'template_data': {'title': 'My Profile', profile: profile}}
 
 	return render(request, 'profiles/profile_me.html', data)
