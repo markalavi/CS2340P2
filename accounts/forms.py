@@ -19,9 +19,17 @@ class LoginForm(AuthenticationForm):
 class SignupForm(UserCreationForm):
 	class Meta(UserCreationForm.Meta):
 		model = User
-		fields = ('username', 'email', 'role', 'password1', 'password2')
+		fields = (
+			'username',
+			'first_name',
+			'last_name',
+			'email',
+			'user_type',
+			'password1',
+			'password2',
+		)
 
 	email = forms.EmailField(required=True)
-	role = forms.ChoiceField(
+	user_type = forms.ChoiceField(
 		choices=[(User.UserType.JobSeeker, 'Job Seeker'), (User.UserType.Recruiter, 'Recruiter')]
 	)
