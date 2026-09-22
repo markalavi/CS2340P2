@@ -37,6 +37,9 @@ INSTALLED_APPS = [
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'accounts',
+        'applications',
+        'jobs',
         ]
 
 MIDDLEWARE = [
@@ -125,3 +128,6 @@ MAILERS = {
             'BACKEND': 'django.core.mail.backends.console.EmailBackend',
             },
         }
+
+# Sets the user type to our custom user.
+AUTH_USER_MODEL = 'accounts.User'
