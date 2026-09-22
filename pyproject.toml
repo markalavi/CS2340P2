@@ -1,5 +1,9 @@
 [tool.ruff]
 line-length = 100
+extend-exclude = [
+	"migrations",
+	"node_modules"
+]
 
 [tool.ruff.format]
 quote-style = "single"
