@@ -6,22 +6,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	initial = True
 
-    initial = True
+	dependencies = [
+		('jobs', '0001_initial'),
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+	]
 
-    dependencies = [
-        ('jobs', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Application',
-            fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('applicant_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('job', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jobs.job')),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Application',
+			fields=[
+				('id', models.AutoField(primary_key=True, serialize=False)),
+				('date', models.DateTimeField(auto_now_add=True)),
+				(
+					'applicant_user',
+					models.ForeignKey(
+						on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+					),
+				),
+				(
+					'job',
+					models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jobs.job'),
+				),
+			],
+		),
+	]
