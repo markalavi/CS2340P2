@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('applications', '0001_initial'),
+	]
 
-    dependencies = [
-        ('applications', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='application',
-            name='status',
-            field=models.IntegerField(choices=[(1, 'In Consideration'), (2, 'Rejected'), (3, 'First Round'), (4, 'Second Round'), (5, 'Offer Extended')], default=1),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='application',
+			name='status',
+			field=models.IntegerField(
+				choices=[
+					(1, 'In Consideration'),
+					(2, 'Rejected'),
+					(3, 'First Round'),
+					(4, 'Second Round'),
+					(5, 'Offer Extended'),
+				],
+				default=1,
+			),
+		),
+	]
