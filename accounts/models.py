@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -19,7 +21,7 @@ class User(AbstractUser):
 	class Meta:
 		"""Provides constraints for the parent class fields."""
 
-		constraints = [
+		constraints: ClassVar[list[models.UniqueConstraint]] = [
 			models.UniqueConstraint(fields=['email'], name='unique_user_email'),
 		]
 
@@ -31,7 +33,7 @@ class User(AbstractUser):
 	first_name = models.CharField(max_length=20)
 	last_name = models.CharField(max_length=20)
 
-	REQUIRED_FIELDS = ['first_name', 'last_name', 'user_type']
+	REQUIRED_FIELDS: ClassVar[list[str]] = ['first_name', 'last_name', 'user_type']
 
 	def __str__(self):
 		"""Returns display name for admin panel, in form \"1: lah8@abc.com\""""
