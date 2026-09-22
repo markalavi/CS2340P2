@@ -19,7 +19,7 @@ class Application(models.Model):
 	id = models.AutoField(primary_key=True)
 
 	# The user that is applying for this job.
-	applicant_user = models.ForeignKey(User, on_delete=models.CASCADE)
+	applicant_user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	# The job the user applied for
 	job = models.ForeignKey(Job, on_delete=models.CASCADE)
