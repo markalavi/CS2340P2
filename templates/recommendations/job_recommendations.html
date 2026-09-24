@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="mb-4">Recommended Jobs</h1>
+
+{% for recommendation in template_data.recommendations %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h2 class="h5">
+				{{ recommendation.match_percentage }}% skill match
+			</h2>
+
+			<p>{{ recommendation.job.description }}</p>
+
+			<div>
+				<strong>Matching skills:</strong>
+
+				{% for skill in recommendation.matching_skills %}
+					<span class="badge text-bg-success">
+						{{ skill.name }}
+					</span>
+				{% endfor %}
+			</div>
+
+			<div class="mt-2">
+				<strong>Required skills:</strong>
+
+				{% for skill in recommendation.job.required_skills.all %}
+					<span class="badge text-bg-secondary">
+						{{ skill.name }}
+					</span>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="alert alert-info">
+		No matching jobs were found.
+	</div>
+{% endfor %}
+{% endblock %}

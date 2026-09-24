@@ -16,3 +16,6 @@ class Job(models.Model):
 
 	# Annualized salary standardized in cents.
 	annual_salary_in_cents = models.IntegerField()
+
+	# Adding required skills for a job to aid in job recommendations and postings.
+	required_skills = models.ManyToManyField('profiles.Skill', blank=True)

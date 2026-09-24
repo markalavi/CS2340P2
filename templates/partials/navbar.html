@@ -11,9 +11,18 @@
 		<div class="collapse navbar-collapse" id="mainNav">
 			<ul class="navbar-nav me-auto">
 				{% if user.is_authenticated %}
-				{% if user.user_type == "JS" %}
-				<li class="nav-item"><a class="nav-link" href="{% url 'profiles:me' %}">My Profile</a></li>
-				{% endif %}
+					{% if user.user_type == "JS" %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'profiles:me' %}">
+								My Profile
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'recommendations:jobs' %}">
+								Recommended Jobs
+							</a>
+						</li>
+					{% endif %}
 				{% endif %}
 			</ul>
 
