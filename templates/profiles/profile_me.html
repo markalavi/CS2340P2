@@ -6,17 +6,66 @@
 <div class="container">
 	<div class="d-flex flex-row">
 		<h3 class="me-auto">My Profile</h3>
-		<button class="text-xs">Edit</button>
+		{% for skill in template_data.profile.skills_set.all %}
+		{% endfor %}
+		<button class="btn btn-outline-secondary">
+			Add link
+		</button>
 	</div>
 	<hr/>
-	<div class="d-flex">
-		<p class="me-5"><b>Name</b></p><p>{{ template_data.profile.user.first_name }} {{ template_data.profile.user.last_name }}<p>	
+	<div class="d-flex flex-column">
+		<div class="d-flex flex-row">
+			<h5>General Info</h5>
+			<button class="btn btn-outline-primary text-xs ms-auto">Edit</button>
+		</div>
+		<div class="d-flex">
+			<p class="me-5"><b>Name</b></p><p>{{ template_data.profile.user.first_name }} {{ template_data.profile.user.last_name }}<p>	
+		</div>
+		<div class="d-flex">
+			{% if template_data.profile.headline %}
+			<p class="me-5"><b>Headline</b></p><p class="fst-italic">{{ template_data.profile.headline }}<p>	
+			{% else %}
+			<p class="fst-italic">You haven't set up a headline yet! Click 'edit' to setup a headline, and make it easier for recruiters to get to know you.<p>	
+			{% endif %}
+		</div>
 	</div>
-	<div class="d-flex">
-		{% if template_data.profile.headline %}
-		<p class="me-5"><b>Headline</b></p><p class="fst-italic">{{ template_data.profile.headline }}<p>	
+	<hr/>
+	<div class="d-flex flex-column">
+		<div class="flex-row d-flex">
+			<h5 class="me-auto">Education</h5>
+			<button class="btn btn-outline-primary">
+				+
+			</button>
+		</div>
+		{% if template_data.profile.education_set.exists %}
 		{% else %}
-		<p class="fst-italic">You haven't set up a headline yet! Click 'edit' to setup a headline, and make it easier for recruiters to get to know you.<p>	
+		<p class="fst-italic">You haven't set up an education yet! Click '+' to enter your education history.<p>	
+		{% endif %}
+	</div>
+	<hr/>
+	<div class="d-flex flex-column">
+		<div class="flex-row d-flex">
+			<h5 class="me-auto">Work Experience</h5>
+			<button class="btn btn-outline-primary">
+				+
+			</button>
+		</div>
+		{% if template_data.profile.experience_set.exists %}
+		{% else %}
+		<p class="fst-italic">You haven't set up any experience yet! Click '+' to enter your work history.<p>	
+		{% endif %}
+	</div>
+	<hr/>
+	<div class="d-flex flex-column">
+		<div class="flex-row d-flex">
+			<h5 class="me-auto">Skills</h5>
+			<button class="btn btn-outline-primary">
+				+
+			</button>
+		</div>
+		{% if template_data.profile.experience_set.exists %}
+		{% else %}
+		<p class="fst-italic">You haven't set up any skills yet! Click '+' to add a skill to your profile.<p>	
 		{% endif %}
 	</div>
 </div>
