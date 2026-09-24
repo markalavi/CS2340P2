@@ -1,6 +1,7 @@
 from django.db import models
 
 from accounts.models import User
+from profiles.models import Skill
 
 
 class Job(models.Model):
@@ -16,3 +17,6 @@ class Job(models.Model):
 
 	# Annualized salary standardized in cents.
 	annual_salary_in_cents = models.IntegerField()
+
+	# Skills needed by the job.
+	skills = models.ManyToManyField(Skill)
