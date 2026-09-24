@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="text-center">Add a skill to your profile</h1>
+<hr/>
+<div class="container-sm d-flex flex-column">
+	<form method="POST" class="mx-auto d-flex flex-column gap-2">
+		{% csrf_token %}
+		{{ template_data.form.skill }}
+		<datalist id="skill-options">
+			{% for skill in template_data.form.suggestions %}
+			<option value="{{ skill.name }}">
+			{% endfor %}
+		</datalist>
+		{{ template_data.form.skill.errors }}
+		<button type="submit" class="btn btn-primary">Add skill</button>
+	</form>
+</div>
+{% endblock %}
