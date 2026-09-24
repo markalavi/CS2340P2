@@ -1,5 +1,23 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1 class="text-center">Hey, <span class="font-monospace">{{ template_data.profile.user.username }}</span>!</h1>
+<h1 class="text-center">Hey, {{ template_data.profile.user.first_name }}! Ready to work?</h1>
+<hr/>
+<div class="container">
+	<div class="d-flex flex-row">
+		<h3 class="me-auto">My Profile</h3>
+		<button class="text-xs">Edit</button>
+	</div>
+	<hr/>
+	<div class="d-flex">
+		<p class="me-5"><b>Name</b></p><p>{{ template_data.profile.user.first_name }} {{ template_data.profile.user.last_name }}<p>	
+	</div>
+	<div class="d-flex">
+		{% if template_data.profile.headline %}
+		<p class="me-5"><b>Headline</b></p><p class="fst-italic">{{ template_data.profile.headline }}<p>	
+		{% else %}
+		<p class="fst-italic">You haven't set up a headline yet! Click 'edit' to setup a headline, and make it easier for recruiters to get to know you.<p>	
+		{% endif %}
+	</div>
+</div>
 {% endblock %}
