@@ -1,4 +1,5 @@
 from django.test import SimpleTestCase
+
 from recommendations.scoring import candidate_score
 
 
