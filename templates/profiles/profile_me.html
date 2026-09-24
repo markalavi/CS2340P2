@@ -62,27 +62,41 @@
 	<div class="d-flex flex-column">
 		<div class="flex-row d-flex">
 			<h5 class="me-auto">Work Experience</h5>
-			<button class="btn btn-outline-primary">
+			<a class="btn btn-outline-primary" href="{% url 'profiles:add_work' %}">
 				+
-			</button>
+			</a>
 		</div>
-		{% if template_data.profile.experience_set.exists %}
-		{% else %}
-		<p class="fst-italic">You haven't set up any experience yet! Click '+' to enter your work history.<p>	
-		{% endif %}
-	</div>
-	<hr/>
-	<div class="d-flex flex-column">
-		<div class="flex-row d-flex">
-			<h5 class="me-auto">Skills</h5>
-			<button class="btn btn-outline-primary">
-				+
-			</button>
+		{% for work in template_data.profile.experience.all %}
+		<div class="card mb-2">
+			<div class="card-body">
+				<h6 class="card-title mb-1">{{ work.title }}</h6>
+				<p class="card-text mb-1">{{ work.company }}</p>
+				<p class="card-text text-muted small mb-2">
+				{{ work.start_date|date:"M Y" }} –
+				{% if work.end_date %}{{ work.end_date|date:"M Y" }}{% else %}Present{% endif %}
+				</p>
+				{% if work.description %}
+				<p class="card-text">{{ work.description|linebreaksbr }}</p>
+				{% endif %}
+			</div>
 		</div>
-		{% if template_data.profile.experience_set.exists %}
-		{% else %}
-		<p class="fst-italic">You haven't set up any skills yet! Click '+' to add a skill to your profile.<p>	
-		{% endif %}
 	</div>
+	{% empty %}
+	<p class="fst-italic">You haven't set up any experience yet! Click '+' to enter your work history.<p>	
+	{% endfor %}
+</div>
+<hr/>
+<div class="d-flex flex-column">
+	<div class="flex-row d-flex">
+		<h5 class="me-auto">Skills</h5>
+		<button class="btn btn-outline-primary">
+			+
+		</button>
+	</div>
+	{% if template_data.profile.experience_set.exists %}
+	{% else %}
+	<p class="fst-italic">You haven't set up any skills yet! Click '+' to add a skill to your profile.<p>	
+	{% endif %}
+</div>
 </div>
 {% endblock %}

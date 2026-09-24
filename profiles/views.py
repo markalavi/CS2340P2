@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from profiles.forms import AddEducationForm, AddLinkForm
+from profiles.forms import AddEducationForm, AddLinkForm, AddWorkForm
 from profiles.models import Profile
 
 
@@ -52,3 +52,23 @@ def profile_me_add_link(request):
 
 	data = {'template_data': {'title': 'Add Link', 'form': form}}
 	return render(request, 'profiles/add_link.html', data)
+
+
+@login_required
+def profile_me_add_work(request):
+	profile, _ = Profile.objects.get_or_create(user=request.user)
+
+	if request.method == 'POST':
+		form = AddWorkForm(request.POST)
+
+		if form.is_valid():
+			link = form.save(commit=False)
+			link.profile = profile
+			link.save()
+
+			return redirect('/profiles')
+	else:
+		form = AddWorkForm()
+
+	data = {'template_data': {'title': 'Add Link', 'form': form}}
+	return render(request, 'profiles/add_work.html', data)
