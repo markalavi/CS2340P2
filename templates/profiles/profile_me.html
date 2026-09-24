@@ -6,11 +6,16 @@
 <div class="container">
 	<div class="d-flex flex-row">
 		<h3 class="me-auto">My Profile</h3>
-		{% for skill in template_data.profile.skills_set.all %}
-		{% endfor %}
-		<button class="btn btn-outline-secondary">
+		<div class="my-auto d-flex me-3">
+			{% for link in template_data.profile.links.all %}
+			<a class="fst-italic btn btn-outline-secondary" href="{{ link.url }}">{{ link.label }}</a>
+			{% empty %}
+			<p class="fst-italic me-3 my-auto">No links added.</p>
+			{% endfor %}
+		</div>
+		<a class="btn btn-outline-secondary" href="{% url 'profiles:add_link' %}">
 			Add link
-		</button>
+		</a>
 	</div>
 	<hr/>
 	<div class="d-flex flex-column">
@@ -33,14 +38,25 @@
 	<div class="d-flex flex-column">
 		<div class="flex-row d-flex">
 			<h5 class="me-auto">Education</h5>
-			<button class="btn btn-outline-primary">
+			<a class="btn btn-outline-primary my-auto mb-3" href="{% url 'profiles:add_education' %}">
 				+
-			</button>
+			</a>
 		</div>
-		{% if template_data.profile.education_set.exists %}
-		{% else %}
+		{% for education in template_data.profile.education.all %}
+		<div class="card mb-2">
+			<div class="card-body">
+				<h6 class="card-title mb-1">{{ education.school|default:"School not specified" }}</h6>
+				{% if education.degree %}
+				<p class="card-text mb-1">{{ education.degree }}</p>
+				{% endif %}
+				<p class="card-text text-muted small mb-0">
+				{{ education.start_year }} – {{ education.end_year|default_if_none:"Present" }}
+				</p>
+			</div>
+		</div>
+		{% empty %}
 		<p class="fst-italic">You haven't set up an education yet! Click '+' to enter your education history.<p>	
-		{% endif %}
+		{% endfor %}
 	</div>
 	<hr/>
 	<div class="d-flex flex-column">
