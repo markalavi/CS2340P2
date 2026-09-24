@@ -1,8 +1,9 @@
 from typing import ClassVar
 
 from django import forms
+from django.forms.widgets import Input
 
-from profiles.models import Education, Experience, Link, Skill
+from profiles.models import Education, Experience, Link, Profile, Skill
 
 
 class AddLinkForm(forms.ModelForm):
@@ -40,5 +41,19 @@ class AddSkillForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		qs = Skill.objects.order_by('name')
 		if profile is not None:
-			qs = qs.exclude(profile=profile) 
+			qs = qs.exclude(profile=profile)
 		self.suggestions = qs
+
+
+class ProfileInfoForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields: ClassVar[list[str]] = ['headline']
+		widgets: ClassVar[dict[str, Input]] = {
+			'headline': forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'e.g. Backend developer who loves Django',
+				}
+			),
+		}
