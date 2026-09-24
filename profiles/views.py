@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from profiles.forms import AddEducationForm, AddLinkForm, AddWorkForm
-from profiles.models import Profile
+from profiles.forms import AddEducationForm, AddLinkForm, AddSkillForm, AddWorkForm
+from profiles.models import Profile, Skill
 
 
 @login_required
@@ -72,3 +72,24 @@ def profile_me_add_work(request):
 
 	data = {'template_data': {'title': 'Add Link', 'form': form}}
 	return render(request, 'profiles/add_work.html', data)
+
+
+@login_required
+def profile_me_add_skill(request):
+	profile, _ = Profile.objects.get_or_create(user=request.user)
+
+	if request.method == 'POST':
+		form = AddSkillForm(request.POST, profile=profile)
+		if form.is_valid():
+			name = form.cleaned_data['skill']
+			skill, _ = Skill.objects.get_or_create(
+				name__iexact=name,
+				defaults={'name': name},
+			)
+			profile.skills.add(skill)
+			return redirect('/profiles')
+	else:
+		form = AddSkillForm(profile=profile)
+
+	data = {'template_data': {'title': 'Add Skill', 'form': form}}
+	return render(request, 'profiles/add_skill.html', data)

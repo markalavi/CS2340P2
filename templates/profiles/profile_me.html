@@ -1,48 +1,53 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1 class="text-center">Hey, {{ template_data.profile.user.first_name }}! Ready to work?</h1>
+{% with profile=template_data.profile %}
+<h1 class="text-center">Hey, {{ profile.user.first_name }}! Ready to work?</h1>
 <hr/>
+
 <div class="container">
-	<div class="d-flex flex-row">
-		<h3 class="me-auto">My Profile</h3>
-		<div class="my-auto d-flex me-3">
-			{% for link in template_data.profile.links.all %}
-			<a class="fst-italic btn btn-outline-secondary" href="{{ link.url }}">{{ link.label }}</a>
-			{% empty %}
-			<p class="fst-italic me-3 my-auto">No links added.</p>
-			{% endfor %}
-		</div>
-		<a class="btn btn-outline-secondary" href="{% url 'profiles:add_link' %}">
-			Add link
-		</a>
+
+	{# Header + links #}
+	<div class="d-flex align-items-center gap-2">
+		<h3 class="me-auto mb-0">My Profile</h3>
+		{% for link in profile.links.all %}
+		<a class="btn btn-outline-secondary fst-italic" href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+		{% empty %}
+		<span class="fst-italic text-muted">No links added.</span>
+		{% endfor %}
+		<a class="btn btn-outline-secondary" href="{% url 'profiles:add_link' %}">Add link</a>
 	</div>
 	<hr/>
-	<div class="d-flex flex-column">
-		<div class="d-flex flex-row">
-			<h5>General Info</h5>
-			<button class="btn btn-outline-primary text-xs ms-auto">Edit</button>
+
+	{# General info #}
+	<section>
+		<div class="d-flex align-items-center mb-3">
+			<h5 class="me-auto mb-0">General Info</h5>
+			<button type="button" class="btn btn-outline-primary btn-sm">Edit</button>
 		</div>
-		<div class="d-flex">
-			<p class="me-5"><b>Name</b></p><p>{{ template_data.profile.user.first_name }} {{ template_data.profile.user.last_name }}<p>	
-		</div>
-		<div class="d-flex">
-			{% if template_data.profile.headline %}
-			<p class="me-5"><b>Headline</b></p><p class="fst-italic">{{ template_data.profile.headline }}<p>	
-			{% else %}
-			<p class="fst-italic">You haven't set up a headline yet! Click 'edit' to setup a headline, and make it easier for recruiters to get to know you.<p>	
-			{% endif %}
-		</div>
-	</div>
+		<dl class="row mb-0">
+			<dt class="col-sm-2">Name</dt>
+			<dd class="col-sm-10">{{ profile.user.get_full_name }}</dd>
+
+			<dt class="col-sm-2">Headline</dt>
+			<dd class="col-sm-10 fst-italic">
+				{% if profile.headline %}
+				{{ profile.headline }}
+				{% else %}
+				<span class="text-muted">You haven't set up a headline yet! Click 'Edit' to set one up, and make it easier for recruiters to get to know you.</span>
+				{% endif %}
+			</dd>
+		</dl>
+	</section>
 	<hr/>
-	<div class="d-flex flex-column">
-		<div class="flex-row d-flex">
-			<h5 class="me-auto">Education</h5>
-			<a class="btn btn-outline-primary my-auto mb-3" href="{% url 'profiles:add_education' %}">
-				+
-			</a>
+
+	{# Education #}
+	<section>
+		<div class="d-flex align-items-center mb-3">
+			<h5 class="me-auto mb-0">Education</h5>
+			<a class="btn btn-outline-primary btn-sm" href="{% url 'profiles:add_education' %}">+</a>
 		</div>
-		{% for education in template_data.profile.education.all %}
+		{% for education in profile.education.all %}
 		<div class="card mb-2">
 			<div class="card-body">
 				<h6 class="card-title mb-1">{{ education.school|default:"School not specified" }}</h6>
@@ -50,53 +55,57 @@
 				<p class="card-text mb-1">{{ education.degree }}</p>
 				{% endif %}
 				<p class="card-text text-muted small mb-0">
-				{{ education.start_year }} – {{ education.end_year|default_if_none:"Present" }}
+					{{ education.start_year }} – {{ education.end_year|default_if_none:"Present" }}
 				</p>
 			</div>
 		</div>
 		{% empty %}
-		<p class="fst-italic">You haven't set up an education yet! Click '+' to enter your education history.<p>	
+		<p class="fst-italic text-muted">You haven't set up an education yet! Click '+' to enter your education history.</p>
 		{% endfor %}
-	</div>
+	</section>
 	<hr/>
-	<div class="d-flex flex-column">
-		<div class="flex-row d-flex">
-			<h5 class="me-auto">Work Experience</h5>
-			<a class="btn btn-outline-primary" href="{% url 'profiles:add_work' %}">
-				+
-			</a>
+
+	{# Work experience #}
+	<section>
+		<div class="d-flex align-items-center mb-3">
+			<h5 class="me-auto mb-0">Work Experience</h5>
+			<a class="btn btn-outline-primary btn-sm" href="{% url 'profiles:add_work' %}">+</a>
 		</div>
-		{% for work in template_data.profile.experience.all %}
+		{% for work in profile.experience.all %}
 		<div class="card mb-2">
 			<div class="card-body">
 				<h6 class="card-title mb-1">{{ work.title }}</h6>
 				<p class="card-text mb-1">{{ work.company }}</p>
 				<p class="card-text text-muted small mb-2">
-				{{ work.start_date|date:"M Y" }} –
-				{% if work.end_date %}{{ work.end_date|date:"M Y" }}{% else %}Present{% endif %}
+					{{ work.start_date|date:"M Y" }} –
+					{% if work.end_date %}{{ work.end_date|date:"M Y" }}{% else %}Present{% endif %}
 				</p>
 				{% if work.description %}
 				<p class="card-text">{{ work.description|linebreaksbr }}</p>
 				{% endif %}
 			</div>
 		</div>
-	</div>
-	{% empty %}
-	<p class="fst-italic">You haven't set up any experience yet! Click '+' to enter your work history.<p>	
-	{% endfor %}
+		{% empty %}
+		<p class="fst-italic text-muted">You haven't set up any experience yet! Click '+' to enter your work history.</p>
+		{% endfor %}
+	</section>
+	<hr/>
+
+	{# Skills #}
+	<section>
+		<div class="d-flex align-items-center mb-3">
+			<h5 class="me-auto mb-0">Skills</h5>
+			<a class="btn btn-outline-primary btn-sm" href="{% url 'profiles:add_skill' %}">+</a>
+		</div>
+		<div class="d-flex flex-wrap gap-2">
+			{% for skill in profile.skills.all %}
+			<span class="badge rounded-pill text-bg-secondary fs-6 fw-normal">{{ skill.name }}</span>
+			{% empty %}
+			<p class="fst-italic text-muted mb-0">You haven't set up any skills yet! Click '+' to add a skill to your profile.</p>
+			{% endfor %}
+		</div>
+	</section>
+
 </div>
-<hr/>
-<div class="d-flex flex-column">
-	<div class="flex-row d-flex">
-		<h5 class="me-auto">Skills</h5>
-		<button class="btn btn-outline-primary">
-			+
-		</button>
-	</div>
-	{% if template_data.profile.experience_set.exists %}
-	{% else %}
-	<p class="fst-italic">You haven't set up any skills yet! Click '+' to add a skill to your profile.<p>	
-	{% endif %}
-</div>
-</div>
+{% endwith %}
 {% endblock %}
