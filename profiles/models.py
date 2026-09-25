@@ -5,6 +5,10 @@ from django.db import models
 class Skill(models.Model):
 	name = models.CharField(max_length=50, unique=True)
 
+	def __str__(self):
+		"""Return the name of the skill as a string for admin panel."""
+		return f'{self.name}'
+
 
 class Profile(models.Model):
 	# NOTE: Automatically delete entry when corresponding User model is deleted
