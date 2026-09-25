@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="text-center">Add a link to your profile</h1>
+<hr/>
+<div class="container-sm d-flex flex-column">
+	<form method="POST" class="mx-auto d-flex flex-column">
+		{% csrf_token %}
+
+		{{ template_data.form.as_p }}
+
+		<button type="submit" class="btn btn-primary">Add link</button>
+	</form>
+</div>
+{% endblock %}

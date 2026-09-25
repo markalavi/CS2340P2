@@ -7,11 +7,11 @@ from .models import User
 
 
 class CustomUserAdmin(UserAdmin):
-	"""Admin registration for user models."""
+    """Admin registration for user models."""
 
-	model = User
+    model = User
 
-	list_display: ClassVar[list[str]] = ['id', 'email', 'username', 'first_name', 'last_name']
+    list_display: ClassVar[list[str]] = ['id', 'email', 'username', 'first_name', 'last_name']
 
 
 admin.site.register(User, CustomUserAdmin)
