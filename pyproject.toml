@@ -7,5 +7,5 @@ extend-exclude = [
 
 [tool.ruff.format]
 quote-style = "single"
-indent-style = "tab"
+indent-style = "space"
 docstring-code-format = true

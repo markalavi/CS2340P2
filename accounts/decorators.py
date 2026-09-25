@@ -14,32 +14,32 @@ jobseeker_only_roles = [User.UserType.Recruiter, User.UserType.Admin]
 
 
 def recruiter_required(view_func):
-	"""
-	Restricts a view to authenticated users with the roles in
-	`accounts.decorators.recruiter_only_roles`
-	"""
+    """
+    Restricts a view to authenticated users with the roles in
+    `accounts.decorators.recruiter_only_roles`
+    """
 
-	@login_required
-	@wraps(view_func)
-	def wrapper(request, *args, **kwargs):
-		if request.user.user_type not in recruiter_only_roles:
-			raise PermissionDenied
-		return view_func(request, *args, **kwargs)
+    @login_required
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if request.user.user_type not in recruiter_only_roles:
+            raise PermissionDenied
+        return view_func(request, *args, **kwargs)
 
-	return wrapper
+    return wrapper
 
 
 def jobseeker_required(view_func):
-	"""
-	Restricts a view to authenticated users with the roles in
-	`accounts.decorators.jobseeker_only_roles`
-	"""
+    """
+    Restricts a view to authenticated users with the roles in
+    `accounts.decorators.jobseeker_only_roles`
+    """
 
-	@login_required
-	@wraps(view_func)
-	def wrapper(request, *args, **kwargs):
-		if request.user.user_type not in jobseeker_only_roles:
-			raise PermissionDenied
-		return view_func(request, *args, **kwargs)
+    @login_required
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if request.user.user_type not in jobseeker_only_roles:
+            raise PermissionDenied
+        return view_func(request, *args, **kwargs)
 
-	return wrapper
+    return wrapper
