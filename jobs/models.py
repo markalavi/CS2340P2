@@ -22,7 +22,7 @@ class Job(models.Model):
     skills = models.ManyToManyField(Skill)
 
     # TODO: Create a Company model and make a foreign key to enable search by company.
-    company = models.CharField(max_lenth=40)
+    company = models.CharField(max_length=40)
 
     def __str__(self):
         """Returns the job name and the company name"""
