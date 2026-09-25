@@ -12,6 +12,7 @@ recruiter_only_roles = [User.UserType.Recruiter, User.UserType.Admin]
 # with `jobseeker_required`.
 jobseeker_only_roles = [User.UserType.Recruiter, User.UserType.Admin]
 
+
 def recruiter_required(view_func):
 	"""
 	Restricts a view to authenticated users with the roles in
@@ -42,4 +43,3 @@ def jobseeker_required(view_func):
 		return view_func(request, *args, **kwargs)
 
 	return wrapper
-
