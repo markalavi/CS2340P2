@@ -12,6 +12,12 @@ class Job(models.Model):
     # The recruiter that posted the job listing
     recruiter = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    # The job title
+    title = models.CharField(max_length=150)
+
+    # Where the job is located
+    location = models.CharField(max_length=100, blank=True)
+
     # The job description
     description = models.TextField(max_length=1024)
 
@@ -24,6 +30,9 @@ class Job(models.Model):
     # TODO: Create a Company model and make a foreign key to enable search by company.
     company = models.CharField(max_length=40)
 
+    # When the job was posted.
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         """Returns the job name and the company name"""
-        return f'{self.company}'
+        return f'{self.title}, {self.company}'
