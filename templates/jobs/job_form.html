@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="mb-4">{{ template_data.title }}</h1>
+
+<form method="post" class="col-lg-8">
+	{% csrf_token %}
+	{{ template_data.form.as_p }}
+	<button type="submit" class="btn btn-primary">Save</button>
+	<a class="btn btn-outline-secondary" href="{% url 'jobs:list' %}">Cancel</a>
+</form>
+{% endblock %}
