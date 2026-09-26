@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.contrib import admin
 
 from .models import Job
@@ -6,7 +8,7 @@ from .models import Job
 class CustomJobAdmin(admin.ModelAdmin):
     """Admin registration for jobs."""
 
-    list_display = [
+    list_display: ClassVar[list[str]] = [
         'id',
         'recruiter',
         'title',
@@ -16,5 +18,6 @@ class CustomJobAdmin(admin.ModelAdmin):
         'company',
         'created_at',
     ]
+
 
 admin.site.register(Job, CustomJobAdmin)

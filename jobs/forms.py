@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django import forms
 
 from jobs.models import Job
@@ -14,8 +16,8 @@ class JobForm(forms.ModelForm):
 
     class Meta:
         model = Job
-        fields = ['title', 'company', 'location', 'description', 'skills']
-        widgets = {
+        fields: ClassVar[list[str]] = ['title', 'company', 'location', 'description', 'skills']
+        widgets: ClassVar[dict[str, any]] = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'company': forms.TextInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
