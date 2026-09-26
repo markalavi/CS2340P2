@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'applications',
     'jobs',
     'profiles',
+    'recommendations',
 ]
 
 MIDDLEWARE = [
